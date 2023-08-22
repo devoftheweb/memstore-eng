@@ -19,9 +19,9 @@ server/: Main directory containing server components.
     transaction.py: Contains the class for handling individual transactions.
 
 tests/: Directory containing unit tests.
-  test_server.py: Unit tests for the server class.
-  test_command_parser.py: Unit tests for the command parser class.
-  test_data_store.py: Unit tests for the data store and transaction classes.
+    test_server.py: Unit tests for the server class.
+    test_command_parser.py: Unit tests for the command parser class.
+    test_data_store.py: Unit tests for the data store and transaction classes.
 ```
 
 ## Installation 🎉
