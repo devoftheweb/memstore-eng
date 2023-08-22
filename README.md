@@ -61,6 +61,24 @@ client.disconnect()
 - `Transaction`: Manages an individual transaction, including tracking changes and allowing commits and rollbacks.
 - `Client`: Used by clients to connect to the server, send commands, and receive responses.
 
+## Assumptions 📚
+
+- **Single Machine Deployment**:
+  - Implementation does not include authentication, encryption, or other security measures that would be necessary for a public-facing server.
+- **In-Memory Storage**:
+  - Data does not persist between server restarts. Speed is prioritized over persistence. In-memory storage allows for faster access times.
+- **No Concurrency Control for Multiple Clients**:
+  - No concurrency control mechanisms like locking for handling simultaneous access to the same data by multiple clients.
+  - Implementing a full-fledged concurrency control mechanism would increase complexity.
+- **Simplified Command Syntax**:
+  - Helps in parsing and handling commands efficiently.
+- **Single Client Session Transactional Consistency**:
+  - Transactions are handled within the context of a single client session. 
+- **UTF-8 Encoding**:
+  - Standardizes the encoding across the system, ensuring consistent interpretation of strings by both the server and clients.
+
+In a production environment, we would have authentication, authorization, persistence, concurrency control, locking, multi-client, and other important features.
+
 
 ## License
 
