@@ -58,6 +58,8 @@ Main Menu:
 Select an option:
 ```
 
+![Starting server, connecting client](media/server-host.png)
+
 
 ## File structure 👨‍💻
 
