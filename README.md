@@ -1,12 +1,14 @@
 # Haus Engineering: In-Memory Key/Value Data Server
 Author: Jose Morales
 
+[LinkedIn](https://www.linkedin.com/in/moralesdev/)
 
-## Introduction
+
+## Introduction ⚡
 
 This project implements an in-memory key/value data store server that supports transactions. The server can accept multiple clients and handle commands to add, retrieve, update, and delete key/value pairs, as well as manage transactions.
 
-## File structure
+## File structure 👨‍💻
 
 ```bash
 client/: Directory containing client-related components.
@@ -24,14 +26,14 @@ tests/: Directory containing unit tests.
   test_data_store.py: Unit tests for the data store and transaction classes.
 ```
 
-## Installation
+## Installation 🎉
 
 1. Clone the repository or download the source code.
 2. Ensure you have Python 3.x installed.
 3. Navigate to the project directory in your terminal.
 4. Run the server and client as described in the Usage section below.
 
-## Usage
+## Usage 💎
 
 1. Run the Server. The server will start, and you can connect clients to it.
 
@@ -53,10 +55,7 @@ print(response)  # Output: {'status': 'Ok'}
 client.disconnect()
 ```
 
-## Classes Overview
-
-
-## Classes Overview
+## Classes Overview 🎨
 
 - `Server`: Accepts client connections, reads commands, and dispatches them to the appropriate handlers.
 - `CommandParser`: Parses and validates client commands, translating them into actionable requests.
