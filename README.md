@@ -10,13 +10,13 @@ This project implements an in-memory key/value data store server that supports t
 
 ```bash
 client/: Directory containing client-related components.
-    -->client.py: Contains a class for client connections.
+    client.py: Contains a class for client connections.
     
 server/: Main directory containing server components.
-    --> server.py: Contains the main server class handling client connections and dispatching commands.
-    --> command_parser.py: Contains a class to parse and validate client commands.
-    --> data_store.py: Contains the main class for the in-memory key-value store, managing transactions.
-    --> transaction.py: Contains the class for handling individual transactions.
+    server.py: Contains the main server class handling client connections and dispatching commands.
+    command_parser.py: Contains a class to parse and validate client commands.
+    data_store.py: Contains the main class for the in-memory key-value store, managing transactions.
+    transaction.py: Contains the class for handling individual transactions.
 
 tests/: Directory containing unit tests.
   test_server.py: Unit tests for the server class.
