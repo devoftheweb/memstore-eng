@@ -15,9 +15,9 @@ This project implements an in-memory key/value data store server that supports t
 
 ## Installation 🎉
 
-1. Clone the repository or download the source code.
-2. Ensure you have Python 3.x installed.
-3. Navigate to the project directory in your terminal.
+1. Clone the repository or download the source code: `git clone giturl`
+2. Ensure you have Python 3.x installed: `python --version`
+3. Navigate to the project directory in your terminal: `cd path/to/repo`
 4. Run the server and client as described in the Usage section below.
 
 ## Usage 💎
