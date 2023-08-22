@@ -59,7 +59,7 @@ Main Menu:
 3. Exit
 Select an option:
 ```
-4. Example use: `PUT key1 value1`
+4. Example use for Connect Client: `PUT key1 value1`
 
 ![Starting server, connecting client](media/server-host.png)
 
