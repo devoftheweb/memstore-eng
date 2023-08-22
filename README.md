@@ -25,6 +25,8 @@ git clone https://github.com/devoftheweb/haus-eng.git
 
 ## Usage 💎
 
+### 1) `Client` class
+
 1. Run the Server. The server will start, and you can connect clients to it.
 
 ```bash
@@ -45,7 +47,7 @@ print(response)  # Output: {'status': 'Ok'}
 client.disconnect()
 ```
 
-### Option 2
+### 2) CLI
 
 1. Navigate to project directory root
 2. Run `python main.py`
