@@ -63,6 +63,10 @@ client.disconnect()
 
 ## Assumptions 📚
 
+In a production environment, we would have authentication, authorization, persistence, concurrency control, locking, multi-client, and other important features.
+
+The assumptions made are:
+
 - **Single Machine Deployment**:
   - Implementation does not include authentication, encryption, or other security measures that would be necessary for a public-facing server.
 - **In-Memory Storage**:
@@ -76,9 +80,6 @@ client.disconnect()
   - Transactions are handled within the context of a single client session. 
 - **UTF-8 Encoding**:
   - Standardizes the encoding across the system, ensuring consistent interpretation of strings by both the server and clients.
-
-In a production environment, we would have authentication, authorization, persistence, concurrency control, locking, multi-client, and other important features.
-
 
 ## License
 
