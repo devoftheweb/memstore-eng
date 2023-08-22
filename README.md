@@ -19,14 +19,8 @@ This project implements an in-memory key/value data store server that supports t
 ```bash
 git clone https://github.com/devoftheweb/haus-eng.git
 ```
-2. Ensure you have Python 3.x installed: 
-```bash
-python --version
-```
-3. Navigate to the project directory in your terminal:
-```bash
-cd path/to/repo
-```
+2. Ensure you have Python 3.x installed: `python --version`
+3. Navigate to the project directory in your terminal: `cd path/to/repo`
 4. Run the server and client as described in the Usage section below.
 
 ## Usage 💎
