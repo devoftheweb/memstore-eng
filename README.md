@@ -1,37 +1,17 @@
 # Haus Engineering: In-Memory Key/Value Data Server
 Author: [Jose Morales](https://www.linkedin.com/in/moralesdev/)
 
-
-### Table of Contents
-1. [Introduction ⚡](#introduction-)
-2. [File Structure 👨‍💻](#file-structure-)
-3. [Installation 🎉](#installation-)
-4. [Usage 💎](#usage-)
-5. [Classes Overview 🎨](#classes-overview-)
-6. [Assumptions 📚](#assumptions-)
-7. [License](#license)
-
 ## Introduction ⚡
 
 This project implements an in-memory key/value data store server that supports transactions. The server can accept multiple clients and handle commands to add, retrieve, update, and delete key/value pairs, as well as manage transactions.
 
-## File structure 👨‍💻
-
-```bash
-client/: Directory containing client-related components.
-    client.py: Contains a class for client connections.
-    
-server/: Main directory containing server components.
-    server.py: Contains the main server class handling client connections and dispatching commands.
-    command_parser.py: Contains a class to parse and validate client commands.
-    data_store.py: Contains the main class for the in-memory key-value store, managing transactions.
-    transaction.py: Contains the class for handling individual transactions.
-
-tests/: Directory containing unit tests.
-    test_server.py: Unit tests for the server class.
-    test_command_parser.py: Unit tests for the command parser class.
-    test_data_store.py: Unit tests for the data store and transaction classes.
-```
+### Table of Contents
+1. [Installation 🎉](#installation-)
+2. [Usage 💎](#usage-)
+3. [File Structure 👨‍💻](#file-structure-)
+4. [Classes Overview 🎨](#classes-overview-)
+5. [Assumptions 📚](#assumptions-)
+6. [License](#license)
 
 ## Installation 🎉
 
@@ -60,6 +40,25 @@ client.connect()
 response = client.send_command("PUT key1 value1")
 print(response)  # Output: {'status': 'Ok'}
 client.disconnect()
+```
+
+
+## File structure 👨‍💻
+
+```bash
+client/: Directory containing client-related components.
+    client.py: Contains a class for client connections.
+    
+server/: Main directory containing server components.
+    server.py: Contains the main server class handling client connections and dispatching commands.
+    command_parser.py: Contains a class to parse and validate client commands.
+    data_store.py: Contains the main class for the in-memory key-value store, managing transactions.
+    transaction.py: Contains the class for handling individual transactions.
+
+tests/: Directory containing unit tests.
+    test_server.py: Unit tests for the server class.
+    test_command_parser.py: Unit tests for the command parser class.
+    test_data_store.py: Unit tests for the data store and transaction classes.
 ```
 
 ## Classes Overview 🎨
