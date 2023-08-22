@@ -1,7 +1,5 @@
 # Haus Engineering: In-Memory Key/Value Data Server
-Author: Jose Morales
-
-[LinkedIn](https://www.linkedin.com/in/moralesdev/)
+Author: [Jose Morales](https://www.linkedin.com/in/moralesdev/)
 
 
 ## Introduction ⚡
