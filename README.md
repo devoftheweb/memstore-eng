@@ -1,6 +1,13 @@
 # Haus Engineering: In-Memory Key/Value Data Server
 Author: [Jose Morales](https://www.linkedin.com/in/moralesdev/)
 
+1. [Introduction ⚡](#introduction-)
+2. [File Structure 👨‍💻](#file-structure-)
+3. [Installation 🎉](#installation-)
+4. [Usage 💎](#usage-)
+5. [Classes Overview 🎨](#classes-overview-)
+6. [Assumptions 📚](#assumptions-)
+7. [License](#license)
 
 ## Introduction ⚡
 
