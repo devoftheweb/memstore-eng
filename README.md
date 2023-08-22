@@ -15,9 +15,18 @@ This project implements an in-memory key/value data store server that supports t
 
 ## Installation 🎉
 
-1. Clone the repository or download the source code: `git clone giturl`
-2. Ensure you have Python 3.x installed: `python --version`
-3. Navigate to the project directory in your terminal: `cd path/to/repo`
+1. Clone the repository or download the source code: 
+```bash
+git clone https://github.com/devoftheweb/haus-eng.git
+```
+2. Ensure you have Python 3.x installed: 
+```bash
+python --version
+```
+3. Navigate to the project directory in your terminal:
+```bash
+cd path/to/repo
+```
 4. Run the server and client as described in the Usage section below.
 
 ## Usage 💎
@@ -40,6 +49,19 @@ client.connect()
 response = client.send_command("PUT key1 value1")
 print(response)  # Output: {'status': 'Ok'}
 client.disconnect()
+```
+
+### Option 2
+
+1. Navigate to project directory root
+2. Run `python main.py`
+3. Choose from one of these options:
+```bash
+Main Menu:
+1. Start Server
+2. Connect Client
+3. Exit
+Select an option:
 ```
 
 
