@@ -1,5 +1,5 @@
 import unittest
-from server.server import Server
+from server.core.server import Server
 from client.client import Client
 import threading
 

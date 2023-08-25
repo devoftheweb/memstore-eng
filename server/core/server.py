@@ -1,8 +1,8 @@
 import socket
 import threading
 import json
-from server.data_store import DataStore
-from server.command_parser import CommandParser
+from server.data_store.data_store import DataStore
+from server.core.command_parser import CommandParser
 from typing import Any, Dict
 
 class Server:
