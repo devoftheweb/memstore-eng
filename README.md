@@ -27,10 +27,10 @@ git clone https://github.com/devoftheweb/haus-eng.git
 
 ### 1) `Client` class
 
-1. Run the Server. The server will start, and you can connect clients to it.
+1. Start the Server
 
 ```bash
-python server/server.py
+python main.py
 ```
 
 2. Run a Client
