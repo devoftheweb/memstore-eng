@@ -67,7 +67,7 @@ Select an option:
 ![Starting server, connecting client](assets/server-host.png)
 
 
-## File structure 👨‍💻
+## File structure 👨‍
 
 ```bash
 client/: 
@@ -103,7 +103,7 @@ tests/:
 main.py: CLI
 ```
 
-## Classes Overview 🎨
+## Classes Overview 
 
 - `CommandParser`: Parses and validates client commands.
 - `Client`: Used by clients to connect to the server, send commands, and receive responses.
@@ -113,7 +113,7 @@ main.py: CLI
 - `ShardingManager`: Manages the shards in the system, distributing keys among shards, and retrieving the appropriate shard for a given key.
 - `DataStore`: Manages the in-memory key-value store, supports basic CRUD operations, and controls transactions.
 
-## Assumptions 📚
+## Assumptions 
 
 In a production environment, we would have authentication, authorization, and other important features.
 
