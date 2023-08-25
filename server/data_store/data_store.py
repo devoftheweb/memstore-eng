@@ -1,5 +1,6 @@
 from typing import Any, Optional, List
-from server.data_store.transaction import LockType, TransactionManager
+from server.data_store.transactions.transaction import LockType
+from server.data_store.transactions.transaction_manager import TransactionManager
 from server.data_store.sharding.sharding_manager import ShardingManager
 from server.data_store.sharding.shard import Shard
 
