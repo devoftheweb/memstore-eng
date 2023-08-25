@@ -19,8 +19,8 @@ High-performance in-memory key/value data store server that supports transaction
 ```bash
 git clone https://github.com/devoftheweb/haus-eng.git
 ```
-2. Python 3.x installed: `python --version`
-3. Navigate to the project directory: `cd path/to/repo`
+2. Python 3.x+ installed: `python --version`
+3. Navigate to project directory: `cd path/to/repo`
 4. Run Server and Client as described below.
 
 ## Usage 💎
@@ -29,9 +29,9 @@ git clone https://github.com/devoftheweb/haus-eng.git
 
 1. Start the Server: `py main.py`
 
-2. Run a Client
+2. Run a Client:
 
-You can use the `Client` class in the `client/client.py` file to connect to the server, send commands, and receive responses.
+Use the `Client` class in the `client/client.py` file to connect to the server, send commands, and receive responses.
 
 ```python
 from client.client import Client
@@ -39,7 +39,7 @@ from client.client import Client
 client = Client()
 client.connect()
 
-# Sending a BEGIN command to start a transaction
+# Sending a BEGIN command to create a transaction
 response = client.send_command("BEGIN")
 transaction_id = response['transaction_id']
 print(f"Transaction started with ID: {transaction_id}")
@@ -48,7 +48,7 @@ print(f"Transaction started with ID: {transaction_id}")
 response = client.send_command(f"PUT key1 value1 {transaction_id}")
 print(response['status'])  # Output: {'status': 'Ok'}
 
-# Disconnect from the server
+# Disconnect
 client.disconnect()
 ```
 
@@ -66,7 +66,7 @@ Select an option:
 ```
 4. Example use for Connect Client: `PUT key1 value1`
 
-![Starting server, connecting client](media/server-host.png)
+![Starting server, connecting client](assets/server-host.png)
 
 
 ## File structure 👨‍💻
@@ -116,6 +116,7 @@ The assumptions made are:
 - ~~✅ Transactional Consistency: Multi-Client~~
 - ~~✅ Sharding~~
 - ~~✅ LRU Caching~~
+- ~~✅ Modular codebase~~
 - ~~✅ UTF-8 Encoding~~
 
 ## License
