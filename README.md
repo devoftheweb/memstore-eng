@@ -1,29 +1,27 @@
-# Haus Engineering: In-Memory Key/Value Data Server
+# Haus Engineering: In-Memory Key/Value Data Store
 Author: [Jose Morales](https://www.linkedin.com/in/moralesdev/)
 
 ## Introduction ⚡
 
-High-performance in-memory key/value data store server that supports transactions.
+High-performance in-memory key/value data store server.
 
 ### Table of Contents
-1. [Installation 🎉](#installation-)
-2. [Usage 💎](#usage-)
-3. [File Structure 👨‍💻](#file-structure-)
-4. [Classes Overview 🎨](#classes-overview-)
-5. [Assumptions 📚](#assumptions-)
+1. [Installation](#installation-)
+2. [Usage](#usage-)
+3. [File Structure](#file-structure-)
+4. [Classes Overview](#classes-overview-)
+5. [Assumptions](#assumptions-)
 6. [License](#license)
 
-## Installation 🎉
+## Installation
 
-1. Clone repo: 
 ```bash
 git clone https://github.com/devoftheweb/haus-eng.git
+py --version
+cd path/to/repo
 ```
-2. Python 3.x+ installed: `python --version`
-3. Navigate to project directory: `cd path/to/repo`
-4. Run Server and Client as described below.
 
-## Usage 💎
+## Usage
 
 ### 1) `Client` class
 
