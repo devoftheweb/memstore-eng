@@ -1,10 +1,13 @@
 from server.server import Server
 from client.client import Client
+import threading
+
 
 def start_server():
     print("Starting server...")
     server = Server()
-    server.start()
+    threading.Thread(target=server.start).start()
+
 
 def connect_client():
     print("Connecting client...")
@@ -17,6 +20,7 @@ def connect_client():
             break
         response = client.send_command(command_str)
         print("Response:", response)
+
 
 def main():
     while True:
@@ -35,6 +39,7 @@ def main():
             break
         else:
             print("Invalid choice. Please try again.")
+
 
 if __name__ == "__main__":
     main()

@@ -25,7 +25,13 @@ class Client:
         """
         self.client_socket.send(command_str.encode('utf-8'))
         response_str = self.client_socket.recv(1024).decode('utf-8').strip()
-        return json.loads(response_str)
+        print("Raw response from Client:", response_str)  # Add this line
+        try:
+            return json.loads(response_str)
+        except json.JSONDecodeError:
+            print("Error decoding response:", response_str)
+            return None
+        # return json.loads(response_str)
 
     def disconnect(self) -> None:
         """Disconnects from the server."""

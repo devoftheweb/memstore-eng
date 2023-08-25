@@ -1,60 +1,124 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List
+from enum import Enum
+from threading import RLock
+
+from server.shard import Shard
+
+
+class LockType(Enum):
+    READ = 1
+    WRITE = 2
+
+
+class Lock:
+    def __init__(self):
+        self.type = None
+        self.holders = set()
+        self.lock = RLock()
+
+    def acquire(self, lock_type: LockType, transaction_id: int):
+        with self.lock:
+            if lock_type == LockType.WRITE and self.type == LockType.READ and transaction_id not in self.holders:
+                raise Exception("Cannot upgrade lock")
+            self.type = lock_type
+            self.holders.add(transaction_id)
+
+    def release(self, transaction_id: int):
+        with self.lock:
+            self.holders.discard(transaction_id)
+            if not self.holders:
+                self.type = None
+
+
+class TransactionManager:
+    def __init__(self):
+        self.current_transaction_id = 0
+        self.transactions = {}
+        self.locks = {}
+        self.lock = RLock()
+
+    def begin(self) -> int:
+        """Begins a new transaction and returns the transaction ID."""
+        transaction_id = self._generate_transaction_id()
+        self.transactions[transaction_id] = Transaction()
+        return transaction_id
+
+    def _generate_transaction_id(self) -> int:
+        """Generates a new unique transaction ID."""
+        self.current_transaction_id += 1
+        return self.current_transaction_id
+
+    def commit(self, transaction_id: int, shards: List[Shard]):
+        with self.lock:
+            transaction = self.transactions.get(transaction_id)
+            if transaction:
+                transaction.commit(shards)
+                self._release_locks(transaction_id)
+
+    def rollback(self, transaction_id: int):
+        with self.lock:
+            transaction = self.transactions.get(transaction_id)
+            if transaction:
+                transaction.rollback()
+                self._release_locks(transaction_id)
+
+    def _release_locks(self, transaction_id: int):
+        for lock in self.locks.values():
+            lock.release(transaction_id)
+
+    def acquire_lock(self, key: str, lock_type: LockType, transaction_id: int):
+        with self.lock:
+            lock = self.locks.get(key)
+            if lock is None:
+                lock = Lock()
+                self.locks[key] = lock
+            lock.acquire(lock_type, transaction_id)
 
 
 class Transaction:
     def __init__(self) -> None:
-        """Initializes the transaction with an empty change log."""
         self.changes: Dict[str, Any] = {}
         self.deleted_keys: set = set()
+        self.pre_commit_state: Dict[str, Any] = {}
 
-    def put(self, key: str, value: Any) -> None:
-        """Adds or updates a change in the transaction.
+    def get(self, key: str, transaction_id: int) -> Optional[Any]:
+        """Retrieves a value by key."""
+        shard = self.get_shard(key)
+        self.transaction_manager.acquire_lock(key, LockType.READ, transaction_id)
+        return shard.storage.get(key, None)
 
-        Args:
-            key (str): The key to add or update.
-            value (Any): The value to associate with the key.
-        """
+    def put(self, key: str, value: Any, current_value: Any) -> None:
+        if key not in self.changes:
+            self.pre_commit_state[key] = current_value
         self.changes[key] = value
         if key in self.deleted_keys:
             self.deleted_keys.remove(key)
 
-    def get(self, key: str, data_store: Dict[str, Any]) -> Optional[Any]:
-        """Retrieves a value considering the changes in the transaction.
-
-        Args:
-            key (str): The key to retrieve.
-            data_store (Dict[str, Any]): The main data store.
-
-        Returns:
-            Optional[Any]: The value considering the transaction changes, or None if not found.
-        """
-        if key in self.changes:
-            return self.changes[key]
-        if key in self.deleted_keys:
-            return None
-        return data_store.get(key, None)
-
-    def delete(self, key: str) -> None:
-        """Deletes a value considering the changes in the transaction.
-
-        Args:
-            key (str): The key to delete.
-        """
+    def delete(self, key: str, current_value: Any) -> None:
+        if key not in self.deleted_keys:
+            self.pre_commit_state[key] = current_value
         self.deleted_keys.add(key)
         self.changes.pop(key, None)
 
-    def commit(self, data_store: Dict[str, Any]) -> None:
-        """Applies the changes to the given data storage.
-
-        Args:
-            data_store (Dict[str, Any]): The main data store to apply the changes to.
-        """
-        for key, value in self.changes.items():
-            data_store[key] = value
-        for key in self.deleted_keys:
-            data_store.pop(key, None)
-
     def rollback(self) -> None:
-        """Clears the changes."""
         self.changes.clear()
         self.deleted_keys.clear()
+        self.pre_commit_state.clear()
+
+    def commit(self, shards: List[Shard]) -> None:
+        for shard in shards:
+            for key, value in self.changes.items():
+                shard.storage[key] = value
+            for key in self.deleted_keys:
+                shard.storage.pop(key, None)
+        self.changes.clear()
+        self.deleted_keys.clear()
+        self.pre_commit_state.clear()
+
+    def undo(self, shards: List[Shard]) -> None:
+        for shard in shards:
+            for key, value in self.pre_commit_state.items():
+                if value is not None:
+                    shard.storage[key] = value
+                else:
+                    shard.storage.pop(key, None)

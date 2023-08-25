@@ -1,61 +1,76 @@
-from typing import Any, Dict, Optional
-from server.transaction import Transaction
+from typing import Any, Dict, Optional, List
+from server.transaction import LockType, TransactionManager
+from server.sharding_manager import ShardingManager
+from server.shard import Shard
 
 
 class DataStore:
-    def __init__(self) -> None:
-        """Initializes the main storage and active transaction list."""
-        self.storage: Dict[str, Any] = {}
-        self.active_transaction: Optional[Transaction] = None
+    def __init__(self, shards: List[Shard] = None, caching_strategy=None) -> None:
+        """
+        Initializes the main storage, active transaction list, and sharding manager.
 
-    def start_transaction(self) -> None:
-        """Begins a new transaction."""
-        self.active_transaction = Transaction()
+        Args:
+            shards (List[Shard], optional): List of Shard objects for sharding. Defaults to 10 shards.
+            caching_strategy: Optional caching strategy for caching key/value pairs.
 
-    def commit_transaction(self) -> None:
+        Attributes:
+            transaction_manager (TransactionManager): Manages the transactions within the data store
+            sharding_manager (ShardingManager): Manages the sharding logic
+            caching_strategy: Caching strategy for managing cache
+        """
+        self.transaction_manager = TransactionManager()
+        self.sharding_manager = ShardingManager(shards or [Shard() for _ in range(10)])
+        self.caching_strategy = caching_strategy
+
+    def get_shard(self, key: str) -> Shard:
+        """Get the shard responsible for the given key."""
+        return self.sharding_manager.get_shard(key)
+
+    def put(self, key: str, value: Any, transaction_id: int) -> None:
+        """Adds or updates a key/value pair."""
+        shard = self.get_shard(key)
+        self.transaction_manager.acquire_lock(key, LockType.WRITE, transaction_id)
+        current_value = shard.storage.get(key)
+        transaction = self.transaction_manager.transactions[transaction_id]
+        transaction.put(key, value, current_value)
+        if self.caching_strategy:
+            self.caching_strategy.add_to_cache(key, value)
+
+    def get(self, key: str, transaction_id: int) -> Optional[Any]:
+        """Retrieves a value by key."""
+        shard = self.get_shard(key)
+        self.transaction_manager.acquire_lock(key, LockType.READ, transaction_id)
+        transaction = self.transaction_manager.transactions.get(transaction_id)
+        if transaction:
+            return transaction.changes.get(key, shard.storage.get(key, None))
+        return shard.storage.get(key, None)
+
+    def delete(self, key: str, transaction_id: int) -> None:
+        """Deletes a value by key."""
+        shard = self.get_shard(key)
+        self.transaction_manager.acquire_lock(key, LockType.WRITE, transaction_id)
+        current_value = shard.storage.get(key)
+        transaction = self.transaction_manager.transactions[transaction_id]
+        transaction.delete(key, current_value)
+        if self.caching_strategy:
+            self.caching_strategy.remove_from_cache(key)
+
+    def start_transaction(self) -> int:
+        """Begins a new transaction and returns the transaction ID."""
+        transaction_id = self.transaction_manager.begin()
+        return transaction_id
+
+    def commit_transaction(self, transaction_id: int) -> None:
         """Commits the current transaction."""
-        if self.active_transaction:
-            self.active_transaction.commit(self.storage)
-            self.active_transaction = None
+        with self.transaction_manager.lock:
+            transaction = self.transaction_manager.transactions.get(transaction_id)
+            if transaction:
+                self.transaction_manager.commit(transaction_id, self.sharding_manager.shards)
 
-    def rollback_transaction(self) -> None:
-        """Discards changes in the current transaction."""
-        if self.active_transaction:
-            self.active_transaction.rollback()
-            self.active_transaction = None
-
-    def put(self, key: str, value: Any) -> None:
-        """Adds or updates a key/value pair.
-
-        Args:
-            key (str): The key to add or update.
-            value (Any): The value to associate with the key.
-        """
-        if self.active_transaction:
-            self.active_transaction.put(key, value)
-        else:
-            self.storage[key] = value
-
-    def get(self, key: str) -> Optional[Any]:
-        """Retrieves a value by key.
-
-        Args:
-            key (str): The key to retrieve.
-
-        Returns:
-            Optional[Any]: The value associated with the key, or None if not found.
-        """
-        if self.active_transaction:
-            return self.active_transaction.get(key, self.storage)
-        return self.storage.get(key, None)
-
-    def delete(self, key: str) -> None:
-        """Deletes a value by key.
-
-        Args:
-            key (str): The key to delete.
-        """
-        if self.active_transaction:
-            self.active_transaction.delete(key)
-        else:
-            self.storage.pop(key, None)
+    def rollback_transaction(self, transaction_id: int) -> None:
+        """Rolls back the current transaction."""
+        with self.transaction_manager.lock:
+            transaction = self.transaction_manager.transactions.get(transaction_id)
+            if transaction:
+                transaction.undo(self.sharding_manager.shards)  # Pass the shards here
+                self.transaction_manager.rollback(transaction_id)

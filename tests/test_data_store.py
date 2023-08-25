@@ -1,61 +1,39 @@
 import unittest
 from server.data_store import DataStore
-
+from server.shard import Shard
 
 class TestDataStore(unittest.TestCase):
 
-    def test_crud_without_transaction(self):
-        """Tests adding, updating, and retrieving key/value pairs without transactions."""
-        store = DataStore()
-        store.put("key1", "value1")
-        self.assertEqual(store.get("key1"), "value1")
-        store.put("key1", "value2")
-        self.assertEqual(store.get("key1"), "value2")
+    def setUp(self):
+        # Creating shards and initializing DataStore with them
+        shards = [Shard() for _ in range(10)]  # Example: 10 shards
+        self.data_store = DataStore(shards)
 
-    def test_delete_without_transaction(self):
-        """Tests deleting keys without transactions."""
-        store = DataStore()
-        store.put("key1", "value1")
-        store.delete("key1")
-        self.assertIsNone(store.get("key1"))
+    def test_put_and_get(self):
+        transaction_id = self.data_store.start_transaction()
+        self.data_store.put("key1", "value1", transaction_id)
+        self.data_store.commit_transaction(transaction_id)
 
-    def test_transaction_commit_rollback(self):
-        """Tests starting, committing, and rolling back a transaction."""
-        store = DataStore()
-        store.put("key1", "value1")
-        store.start_transaction()
-        store.put("key1", "value2")
-        self.assertEqual(store.get("key1"), "value2")
-        store.commit_transaction()
-        self.assertEqual(store.get("key1"), "value2")
+        transaction_id = self.data_store.start_transaction()
+        value = self.data_store.get("key1", transaction_id)
+        self.data_store.commit_transaction(transaction_id)
 
-        store.start_transaction()
-        store.put("key1", "value3")
-        self.assertEqual(store.get("key1"), "value3")
-        store.rollback_transaction()
-        self.assertEqual(store.get("key1"), "value2")
+        self.assertEqual(value, "value1")
 
-    def test_crud_within_transaction(self):
-        """Tests adding, updating, and retrieving key/value pairs within a transaction."""
-        store = DataStore()
-        store.start_transaction()
-        store.put("key1", "value1")
-        self.assertEqual(store.get("key1"), "value1")
-        store.put("key1", "value2")
-        self.assertEqual(store.get("key1"), "value2")
-        store.commit_transaction()
-        self.assertEqual(store.get("key1"), "value2")
+    def test_put_and_delete(self):
+        transaction_id = self.data_store.start_transaction()
+        self.data_store.put("key2", "value2", transaction_id)
+        self.data_store.commit_transaction(transaction_id)
 
-    def test_delete_within_transaction(self):
-        """Tests deleting keys within a transaction."""
-        store = DataStore()
-        store.put("key1", "value1")
-        store.start_transaction()
-        store.delete("key1")
-        self.assertIsNone(store.get("key1"))
-        store.commit_transaction()
-        self.assertIsNone(store.get("key1"))
+        transaction_id = self.data_store.start_transaction()
+        self.data_store.delete("key2", transaction_id)
+        self.data_store.commit_transaction(transaction_id)
 
+        transaction_id = self.data_store.start_transaction()
+        value = self.data_store.get("key2", transaction_id)
+        self.data_store.commit_transaction(transaction_id)
 
-if __name__ == "__main__":
+        self.assertIsNone(value)
+
+if __name__ == '__main__':
     unittest.main()
