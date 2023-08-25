@@ -113,13 +113,12 @@ The assumptions made are:
   - Data does not persist between server restarts. Speed is prioritized over persistence. In-memory storage allows for faster access times.
 - **Simplified Command Syntax**:
   - Helps in parsing and handling commands efficiently.
-- ~~✅ Concurrency Control: 2PL for Multiple Clients~~:
-- ~~✅ Transactional Consistency: Multi-Client~~:
+- ~~✅ Concurrency Control: 2PL for Multiple Clients~~
+- ~~✅ Transactional Consistency: Multi-Client~~
 - ~~✅ Sharding~~
 - ~~✅ LRU Caching~~
-- ~~✅ UTF-8 Encoding~~:
-  - Standardizes the encoding across the system, ensuring consistent interpretation of strings by both the server and clients.
-
+- ~~✅ UTF-8 Encoding~~
+- 
 ## License
 
 This project is open source and available under the MIT License. 
