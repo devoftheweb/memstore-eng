@@ -1,7 +1,7 @@
 from typing import Any, Optional, List
 from server.data_store.transaction import LockType, TransactionManager
-from server.data_store.sharding_manager import ShardingManager
-from server.data_store.shard import Shard
+from server.data_store.sharding.sharding_manager import ShardingManager
+from server.data_store.sharding.shard import Shard
 
 
 class DataStore:

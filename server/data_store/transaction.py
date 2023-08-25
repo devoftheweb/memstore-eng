@@ -2,7 +2,7 @@ from typing import Any, Dict, Optional, List
 from enum import Enum
 from threading import RLock
 
-from server.data_store.shard import Shard
+from server.data_store.sharding.shard import Shard
 
 
 class LockType(Enum):

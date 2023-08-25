@@ -1,6 +1,6 @@
 import unittest
 from server.data_store.data_store import DataStore
-from server.data_store.shard import Shard
+from server.data_store.sharding.shard import Shard
 
 class TestDataStore(unittest.TestCase):
 

@@ -1,5 +1,5 @@
 from typing import List, Dict, Any
-from server.data_store.shard import Shard
+from server.data_store.sharding.shard import Shard
 
 class ShardingManager:
     def __init__(self, shards: List[Shard]) -> None:
