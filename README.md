@@ -97,13 +97,13 @@ main.py: CLI
 
 ## Classes Overview 🎨
 
-- `Server`: Accepts client connections, reads commands, and dispatches them to the appropriate handlers.
 - `CommandParser`: Parses and validates client commands, translating them into actionable requests.
-- `DataStore`: Manages the in-memory key-value store, supports basic CRUD operations, and controls transactions.
+- `Client`: Used by clients to connect to the server, send commands, and receive responses.
+- `Server`: Accepts client connections, reads commands, and dispatches them to the appropriate handlers.
+- `Transaction`: Manages an individual transaction, including tracking changes and allowing commits and rollbacks.
 - `Shard`: Represents a shard within the sharding mechanism.
 - `ShardingManager`: Manages the shards in the system, distributing keys among shards, and retrieving the appropriate shard for a given key.
-- `Transaction`: Manages an individual transaction, including tracking changes and allowing commits and rollbacks.
-- `Client`: Used by clients to connect to the server, send commands, and receive responses.
+- `DataStore`: Manages the in-memory key-value store, supports basic CRUD operations, and controls transactions.
 
 ## Assumptions 📚
 
