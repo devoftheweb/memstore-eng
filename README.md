@@ -3,7 +3,7 @@ Author: [Jose Morales](https://www.linkedin.com/in/moralesdev/)
 
 ## Introduction ⚡
 
-High-performance in-memory key/value data store server that supports transactions. The server can accept multiple clients and handle commands to add, retrieve, update, and delete key/value pairs, as well as manage transactions.
+High-performance in-memory key/value data store server that supports transactions.
 
 ### Table of Contents
 1. [Installation 🎉](#installation-)
@@ -111,8 +111,7 @@ The assumptions made are:
   - Implementation does not include authentication, encryption, or other security measures that would be necessary for a public-facing server.
 - **In-Memory Storage**:
   - Data does not persist between server restarts. Speed is prioritized over persistence. In-memory storage allows for faster access times.
-- **Simplified Command Syntax**:
-  - Helps in parsing and handling commands efficiently.
+
 - ~~✅ Concurrency Control: 2PL for Multiple Clients~~
 - ~~✅ Transactional Consistency: Multi-Client~~
 - ~~✅ Sharding~~
