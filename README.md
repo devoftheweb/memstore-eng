@@ -3,7 +3,7 @@ Author: [Jose Morales](https://www.linkedin.com/in/moralesdev/)
 
 ## Introduction ⚡
 
-This project implements an in-memory key/value data store server that supports transactions. The server can accept multiple clients and handle commands to add, retrieve, update, and delete key/value pairs, as well as manage transactions.
+High-performance in-memory key/value data store server that supports transactions. The server can accept multiple clients and handle commands to add, retrieve, update, and delete key/value pairs, as well as manage transactions.
 
 ### Table of Contents
 1. [Installation 🎉](#installation-)
@@ -15,13 +15,13 @@ This project implements an in-memory key/value data store server that supports t
 
 ## Installation 🎉
 
-1. Clone the repository or download the source code: 
+1. Clone repo: 
 ```bash
 git clone https://github.com/devoftheweb/haus-eng.git
 ```
-2. Ensure you have Python 3.x installed: `python --version`
-3. Navigate to the project directory in your terminal: `cd path/to/repo`
-4. Run the server and client as described in the Usage section below.
+2. Python 3.x installed: `python --version`
+3. Navigate to the project directory: `cd path/to/repo`
+4. Run Server and Client as described below.
 
 ## Usage 💎
 
@@ -107,7 +107,7 @@ main.py: CLI
 
 ## Assumptions 📚
 
-In a production environment, we would have authentication, authorization, persistence, concurrency control, locking, multi-client, and other important features.
+In a production environment, we would have authentication, authorization, and other important features.
 
 The assumptions made are:
 
