@@ -76,24 +76,38 @@ client/:
     client.py: Class for client connections.
     
 server/:
-    server.py: Main server class handling client connections and dispatching commands.
-    command_parser.py: Parse and validate client commands.
-    shard.py: Shard in sharding mechanism.
-    sharding_manager.py: Manages shards.
-    data_store.py: In-memory key-value store, managing transactions.
-    transaction.py: Handling individual transactions.
+    core/:
+        server.py: Core server functionality.
+        command_parser.py: Parse and validate client commands.
+        
+    caching/:
+        caching_strategy.py:
+        
+    data_store/:
+        concurrency/:
+            locking.py: Locking mechanism
+        sharding/:
+            shard.py: Class representing a shard in sharding mechanism.
+            sharding_manager.py:  Manages shards.
+        transactions/:
+            transaction.py: Handling individual transactions.
+            transaction_mananger.py: Manage transactions.
+        data_store.py: Main data store logic and operations.
 
 tests/:
-    test_server.py: Unit tests for the server class.
-    test_command_parser.py: Unit tests for the command parser class.
-    test_data_store.py: Unit tests for the data store and transaction classes.
+    data_store/:
+        test_command_parser.py: Unit tests for the command parser class.
+        test_data_store.py: Unit tests for the data store and transaction classes.
+    
+    server/:
+        test_server.py: Unit tests for the server class.
 
 main.py: CLI
 ```
 
 ## Classes Overview 🎨
 
-- `CommandParser`: Parses and validates client commands, translating them into actionable requests.
+- `CommandParser`: Parses and validates client commands.
 - `Client`: Used by clients to connect to the server, send commands, and receive responses.
 - `Server`: Accepts client connections, reads commands, and dispatches them to the appropriate handlers.
 - `Transaction`: Manages an individual transaction, including tracking changes and allowing commits and rollbacks.
