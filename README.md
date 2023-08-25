@@ -67,7 +67,7 @@ Select an option:
 ![Starting server, connecting client](assets/server-host.png)
 
 
-## File structure 👨‍
+## File structure
 
 ```bash
 client/: 
