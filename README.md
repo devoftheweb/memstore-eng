@@ -58,7 +58,7 @@ client.disconnect()
 
 1. Navigate to project directory root
 2. Run `python main.py`
-3. Choose from one of these options:
+3. Start the server by pressing `1`:
 ```bash
 Main Menu:
 1. Start Server
@@ -66,7 +66,8 @@ Main Menu:
 3. Exit
 Select an option:
 ```
-4. Example command flow in CLI:
+4. Open new shell, navigate to folder, `py main.py`, then press `2`
+5Example command flow in CLI:
 ```bash
 BEGIN
 [command] [key] [value] [transaction_id]
@@ -74,6 +75,9 @@ PUT nameofkey value999 1
 GET nameofkey 1
 BEGIN 
 PUT house large 2
+PUT house small 2
+ROLLBACK 2
+DEL 2
 COMMITALL
 SHOWALL
 ```
@@ -141,10 +145,12 @@ main.py: CLI
 
 - ✅ Concurrency Control: 2PL for Multiple Clients
 - ✅ Transactional Consistency: Multi-Client
-- ✅ Sharding~~
-- ✅ LRU Caching~~
-- ✅ Modular codebase~~
-- ✅ UTF-8 Encoding~~
+- ✅ Command Parsing
+- ✅ Sharding
+- ✅ LRU Caching
+- ✅ Server-Client Architecture
+- ✅ Modular codebase
+- ✅ UTF-8 Encoding
 
 Assumptions made are:
 
