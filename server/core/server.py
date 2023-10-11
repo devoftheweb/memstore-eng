@@ -39,12 +39,12 @@ class Server:
         with client_socket:
             while True:
                 command_str = client_socket.recv(1024).decode('utf-8').strip()
-                print(f"Received command: {command_str}")  # Add this line
+                print(f"Received command: {command_str}")
                 if not command_str:
                     break
 
                 response = self.process_command(command_str)
-                print("Server response:", response)  # Add this line
+                print("Server response:", response)
                 client_socket.send(json.dumps(response).encode('utf-8'))
 
     def process_command(self, command_str: str) -> Dict[str, Any]:
@@ -74,14 +74,12 @@ class Server:
             elif action == "START":
                 self.data_store.start_transaction(transaction_id)
                 return {'status': 'Ok'}
-            # Add this block to handle SHOWALL
             elif action == "SHOWALL":
                 all_data = self.data_store.show_all()
                 return {'status': 'Ok', 'data': all_data}
             elif action == "COMMIT":
                 self.data_store.commit_transaction(transaction_id)
                 return {'status': 'Ok'}
-            # Inside the process_command function
             elif action == "COMMITALL":
                 self.data_store.commit_all_transactions()
                 return {'status': 'Ok'}

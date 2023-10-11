@@ -25,7 +25,7 @@ class LRUCache:
 
         # If the cache is at capacity, remove the least recently used item
         if len(self.cache) >= self.capacity:
-            self.cache.popitem(last=False)  # Remove from the beginning
+            self.cache.popitem(last=False)
 
         # Add the key-value pair to the cache
         self.cache[key] = value

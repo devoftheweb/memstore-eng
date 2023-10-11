@@ -91,7 +91,7 @@ SHOWALL
 - `GET [key] [id]`: retrieves key value
 - `ROLLBACK [id]`: rolls back key to prior value
 - `DEL [id]`: deletes key from store
-- `COMMIT [1]`: commit a transaction
+- `COMMIT [id]`: commit a transaction
 - `COMMITALL`: commits all changes and transactions
 - `SHOWALL`: prints all the keys/values and transaction id's currently in store
 
