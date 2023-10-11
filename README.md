@@ -5,7 +5,7 @@ Author: [Jose Morales](https://www.linkedin.com/in/moralesdev/)
 
 High-performance in-memory key/value data store server. 
 
-The following concepts are implemented: modular codebase, concurrency control, transactional consistency, sharding, and LRU caching.
+The following concepts are implemented: modular codebase, concurrency control, transactional consistency, sharding, LRU caching, and more.
 
 
 
@@ -67,10 +67,9 @@ Main Menu:
 Select an option:
 ```
 4. Open new shell, navigate to folder, `py main.py`, then press `2`
-5Example command flow in CLI:
+5. Example command flow in Client CLI:
 ```bash
 BEGIN
-[command] [key] [value] [transaction_id]
 PUT nameofkey value999 1
 GET nameofkey 1
 BEGIN 
@@ -87,13 +86,13 @@ SHOWALL
 **Available commands**
 
 - `BEGIN`: creates a `transaction_id`
-- `SHOWALL`: prints all the keys/values and transaction id's currently in store
 - `PUT [key] [value] [id]`: adds a key
 - `GET [key] [id]`: retrieves key value
 - `ROLLBACK [id]`: rolls back key to prior value
 - `DEL [id]`: deletes key from store
 - `COMMIT [1]`: commit a transaction
 - `COMMITALL`: commits all changes and transactions
+- `SHOWALL`: prints all the keys/values and transaction id's currently in store
 
 ## File structure
 
