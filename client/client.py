@@ -21,7 +21,7 @@ class Client:
             command_str (str): The command string to send.
 
         Returns:
-            Dict[str, Any]: The response from the server.
+            Dict[str, Any]: The response from the server
         """
         self.client_socket.send(command_str.encode('utf-8'))
         response_str = self.client_socket.recv(1024).decode('utf-8').strip()
