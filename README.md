@@ -72,13 +72,15 @@ BEGIN
 [command] [key] [value] [transaction_id]
 PUT nameofkey value999 1
 GET nameofkey 1
-PUT nameofkey anothervalue 1
-ROLLBACK nameofkey 1
-DEL nameofkey 1
+BEGIN 
+PUT house large 2
+COMMITALL
+SHOWALL
 ```
 
 ![Starting server, connecting client](assets/server-host.png)
 
+**Available commands**
 
 - `BEGIN`: creates a `transaction_id`
 - `SHOWALL`: prints all the keys/values and transaction id's currently in store
