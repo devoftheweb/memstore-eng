@@ -1,16 +1,20 @@
-# Haus Engineering: In-Memory Key/Value Data Store
+# In-Memory Key/Value Data Store
 Author: [Jose Morales](https://www.linkedin.com/in/moralesdev/)
 
 ## Introduction ⚡
 
-High-performance in-memory key/value data store server.
+High-performance in-memory key/value data store server. 
+
+The following concepts are implemented: concurrency control, transactional consistency, sharding, LRU caching, and a modular codebase.
+
+
 
 ### Table of Contents
-1. [Installation](#installation-)
-2. [Usage](#usage-)
-3. [File Structure](#file-structure-)
-4. [Classes Overview](#classes-overview-)
-5. [Assumptions](#assumptions-)
+1. [Installation](#installation)
+2. [Usage](#usage)
+3. [File Structure](#file-structure)
+4. [Classes Overview](#classes-overview)
+5. [Assumptions](#assumptions)
 6. [License](#license)
 
 ## Installation
