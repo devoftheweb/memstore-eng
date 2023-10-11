@@ -17,6 +17,7 @@ The following concepts are implemented: modular codebase, concurrency control, t
 5. [Classes Overview](#classes-overview)
 6. [Unit testing](#unit-testing)
 6. [Features and Assumptions](#features-and-assumptions)
+7. [Production and TO-DOs](#production-and-to-dos)
 7. [License](#license)
 
 ## Installation
@@ -172,6 +173,27 @@ In a production environment, we would have authentication, authorization, and ot
 - **In-Memory Storage**:
   - Data does not persist between server restarts. Speed is prioritized over persistence. In-memory storage allows for faster access times.
 
+## Production and TO-DOs
+
+In a production environment, this project would obviously be much more modular, abstracted, and even broken into separate projects. There are also many other features, capabilities that could be implemented into a high-perf data store.
+
+**Maintainable**
+
+- documentation (living, automated, & manual)
+- all functions have `docstring` with description, args, parameters, data types, returns
+- increased modularity
+- greater abstraction, separate projects
+
+**Reliability**
+
+- exception handling and error validation
+- health checks
+- status page
+- logging
+- alerts
+- incident reporting
+- auto-healing
+
 ## License
 
-This project is open source and available under the MIT License. 
+This project is fully authored by [Jose Morales](https://www.linkedin.com/in/moralesdev/). It is open source and available under the MIT License. 
