@@ -14,7 +14,7 @@ The following concepts are implemented: modular codebase, concurrency control, t
 2. [Usage](#usage)
 3. [File Structure](#file-structure)
 4. [Classes Overview](#classes-overview)
-5. [Assumptions](#assumptions)
+5. [Features and Assumptions](#features-and-assumptions)
 6. [License](#license)
 
 ## Installation
@@ -137,23 +137,23 @@ main.py: CLI
 - `ShardingManager`: Manages the shards in the system, distributing keys among shards, and retrieving the appropriate shard for a given key.
 - `DataStore`: Manages the in-memory key-value store, supports basic CRUD operations, and controls transactions.
 
-## Assumptions 
+## Features and Assumptions 
+
+- ✅ Concurrency Control: 2PL for Multiple Clients
+- ✅ Transactional Consistency: Multi-Client
+- ✅ Sharding~~
+- ✅ LRU Caching~~
+- ✅ Modular codebase~~
+- ✅ UTF-8 Encoding~~
+
+Assumptions made are:
 
 In a production environment, we would have authentication, authorization, and other important features.
-
-The assumptions made are:
 
 - **Single Machine Deployment**:
   - Implementation does not include authentication, encryption, or other security measures that would be necessary for a public-facing server.
 - **In-Memory Storage**:
   - Data does not persist between server restarts. Speed is prioritized over persistence. In-memory storage allows for faster access times.
-
-- ~~✅ Concurrency Control: 2PL for Multiple Clients~~
-- ~~✅ Transactional Consistency: Multi-Client~~
-- ~~✅ Sharding~~
-- ~~✅ LRU Caching~~
-- ~~✅ Modular codebase~~
-- ~~✅ UTF-8 Encoding~~
 
 ## License
 
