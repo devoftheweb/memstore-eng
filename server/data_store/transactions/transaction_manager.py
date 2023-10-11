@@ -41,6 +41,23 @@ class TransactionManager:
         for lock in self.locks.values():
             lock.release(transaction_id)
 
+    def get_transaction_id_for_key(self, key: str) -> Optional[int]:
+        """
+        Returns the transaction ID associated with a given key, if any.
+
+        Time Complexity: O(1)
+        Space Complexity: O(1)
+        """
+        for transaction_id, transaction in self.transactions.items():
+            if key in transaction.changes or key in transaction.deleted_keys:
+                return transaction_id
+        return None
+
+    def commit_all(self, shards: List[Shard]):
+        with self.lock:
+            for transaction_id in list(self.transactions.keys()):
+                self.commit(transaction_id, shards)
+
     def acquire_lock(self, key: str, lock_type: LockType, transaction_id: int):
         with self.lock:
             lock = self.locks.get(key)

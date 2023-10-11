@@ -66,10 +66,28 @@ Main Menu:
 3. Exit
 Select an option:
 ```
-4. Example use for Connect Client: `PUT key1 value1`
+4. Example command flow in CLI:
+```bash
+BEGIN
+[command] [key] [value] [transaction_id]
+PUT nameofkey value999 1
+GET nameofkey 1
+PUT nameofkey anothervalue 1
+ROLLBACK nameofkey 1
+DEL nameofkey 1
+```
 
 ![Starting server, connecting client](assets/server-host.png)
 
+
+- `BEGIN`: creates a `transaction_id`
+- `SHOWALL`: prints all the keys/values and transaction id's currently in store
+- `PUT [key] [value] [id]`: adds a key
+- `GET [key] [id]`: retrieves key value
+- `ROLLBACK [id]`: rolls back key to prior value
+- `DEL [id]`: deletes key from store
+- `COMMIT [1]`: commit a transaction
+- `COMMITALL`: commits all changes and transactions
 
 ## File structure
 

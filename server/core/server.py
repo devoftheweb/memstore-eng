@@ -39,6 +39,7 @@ class Server:
         with client_socket:
             while True:
                 command_str = client_socket.recv(1024).decode('utf-8').strip()
+                print(f"Received command: {command_str}")  # Add this line
                 if not command_str:
                     break
 
@@ -55,6 +56,11 @@ class Server:
                 transaction_id = self.data_store.start_transaction()
                 return {'status': 'Ok', 'transaction_id': transaction_id}
 
+            # Validate transaction_id for commands that require it
+            if action in ["PUT", "GET", "DEL", "COMMIT", "ROLLBACK"]:
+                if transaction_id is None or transaction_id not in self.data_store.transaction_manager.transactions:
+                    return {'status': 'Error', 'mesg': f'Invalid transaction ID {transaction_id}'}
+
             # Handle other commands using the transaction_id
             if action == "PUT":
                 self.data_store.put(params['key'], params['value'], transaction_id)
@@ -68,8 +74,16 @@ class Server:
             elif action == "START":
                 self.data_store.start_transaction(transaction_id)
                 return {'status': 'Ok'}
+            # Add this block to handle SHOWALL
+            elif action == "SHOWALL":
+                all_data = self.data_store.show_all()
+                return {'status': 'Ok', 'data': all_data}
             elif action == "COMMIT":
                 self.data_store.commit_transaction(transaction_id)
+                return {'status': 'Ok'}
+            # Inside the process_command function
+            elif action == "COMMITALL":
+                self.data_store.commit_all_transactions()
                 return {'status': 'Ok'}
             elif action == "ROLLBACK":
                 self.data_store.rollback_transaction(transaction_id)

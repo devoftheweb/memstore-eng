@@ -56,6 +56,21 @@ class DataStore:
         if self.caching_strategy:
             self.caching_strategy.remove_from_cache(key)
 
+    def show_all(self):
+        """
+        Returns a dictionary containing all key-value pairs and their associated transaction IDs.
+        """
+        all_data = {}
+        for shard in self.sharding_manager.shards:
+            for key, value in shard.storage.items():
+                transaction_id = self.transaction_manager.get_transaction_id_for_key(key)
+                all_data[key] = {'value': value, 'transaction_id': transaction_id}
+        return all_data
+
+    def commit_all_transactions(self):
+        with self.transaction_manager.lock:
+            self.transaction_manager.commit_all(self.sharding_manager.shards)
+
     def start_transaction(self) -> int:
         """Begins a new transaction and returns the transaction ID."""
         transaction_id = self.transaction_manager.begin()

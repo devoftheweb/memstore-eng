@@ -1,5 +1,6 @@
 from typing import Any, Dict, Tuple, Optional
 
+
 class CommandParser:
     def parse_command(self, command_str: str) -> Tuple[str, Dict[str, Any], Optional[int]]:
         """Parses a command string and returns the corresponding action and parameters.
@@ -39,7 +40,20 @@ class CommandParser:
             if len(parts) != 1:
                 raise ValueError("BEGIN command takes no parameters")
 
-        elif action not in ("START", "COMMIT", "ROLLBACK"):
+        elif action == "SHOWALL":
+            if len(parts) != 1:
+                raise ValueError("SHOWALL command takes no parameters")
+
+        elif action == "COMMITALL":
+            if len(parts) != 1:
+                raise ValueError("COMMIT ALL command takes no parameters")
+
+        elif action in ("COMMIT", "ROLLBACK"):
+            if len(parts) != 2 or not parts[1].isdigit():
+                raise ValueError(f"{action} command requires a transaction ID")
+            transaction_id = int(parts[1])
+
+        else:
             raise ValueError("Invalid command")
 
         return action, params, transaction_id
