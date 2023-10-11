@@ -166,12 +166,11 @@ py server/test_server.py
 
 Assumptions made are:
 
-In a production environment, we would have authentication, authorization, and other important features.
-
 - **Single Machine Deployment**:
   - Implementation does not include authentication, encryption, or other security measures that would be necessary for a public-facing server.
 - **In-Memory Storage**:
   - Data does not persist between server restarts. Speed is prioritized over persistence. In-memory storage allows for faster access times.
+- Authentication, Authorization checks not included due to single machine deployment
 
 ## Production and TO-DOs
 
