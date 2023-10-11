@@ -16,9 +16,9 @@ The following concepts are implemented: modular codebase, concurrency control, t
 4. [File Structure](#file-structure)
 5. [Classes Overview](#classes-overview)
 6. [Unit testing](#unit-testing)
-6. [Features and Assumptions](#features-and-assumptions)
-7. [Production and TO-DOs](#production-and-to-dos)
-7. [License](#license)
+7. [Features and Assumptions](#features-and-assumptions)
+8. [Production and TO-DOs](#production-and-to-dos)
+9. [License](#license)
 
 ## Installation
 
