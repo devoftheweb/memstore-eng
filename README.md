@@ -153,12 +153,12 @@ py server/test_server.py
 
 ## Features and Assumptions 
 
-- ✅ Concurrency Control: 2PL for Multiple Clients
-- ✅ Transactional Consistency: Multi-Client
+- ✅ Concurrency Control using 2PL (Two-Phase Locking): `threading` and `RLock`
+- ✅ Transactional Consistency for Multi-Client: maintains state
 - ✅ Command Parsing
 - ✅ Sharding
 - ✅ LRU Caching
-- ✅ Server-Client Architecture
+- ✅ Client-Server Architecture
 - ✅ Modular codebase
 - ✅ Unit testing
 - ✅ UTF-8 Encoding
