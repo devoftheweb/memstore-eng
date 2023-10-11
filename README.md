@@ -12,10 +12,11 @@ The following concepts are implemented: modular codebase, concurrency control, t
 ### Table of Contents
 1. [Installation](#installation)
 2. [Usage](#usage)
-3. [File Structure](#file-structure)
-4. [Classes Overview](#classes-overview)
-5. [Features and Assumptions](#features-and-assumptions)
-6. [License](#license)
+3. [Functionality](#functionality)
+4. [File Structure](#file-structure)
+5. [Classes Overview](#classes-overview)
+6. [Features and Assumptions](#features-and-assumptions)
+7. [License](#license)
 
 ## Installation
 
@@ -83,7 +84,7 @@ SHOWALL
 
 ![Starting server, connecting client](assets/server-host.png)
 
-**Available commands**
+## Functionality 
 
 - `BEGIN`: creates a `transaction_id`
 - `PUT [key] [value] [id]`: adds a key
