@@ -25,7 +25,7 @@ class Client:
         """
         self.client_socket.send(command_str.encode('utf-8'))
         response_str = self.client_socket.recv(1024).decode('utf-8').strip()
-        print("Raw response from Client:", response_str)  # Add this line
+        print("Raw response from Client:", response_str)
         try:
             return json.loads(response_str)
         except json.JSONDecodeError:
