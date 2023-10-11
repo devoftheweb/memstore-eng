@@ -5,7 +5,7 @@ Author: [Jose Morales](https://www.linkedin.com/in/moralesdev/)
 
 High-performance in-memory key/value data store server. 
 
-The following concepts are implemented: concurrency control, transactional consistency, sharding, LRU caching, and a modular codebase.
+The following concepts are implemented: modular codebase, concurrency control, transactional consistency, sharding, and LRU caching.
 
 
 
@@ -20,7 +20,7 @@ The following concepts are implemented: concurrency control, transactional consi
 ## Installation
 
 ```bash
-git clone https://github.com/devoftheweb/haus-eng.git
+git clone https://github.com/devoftheweb/memstore-eng.git
 py --version
 cd path/to/repo
 ```
