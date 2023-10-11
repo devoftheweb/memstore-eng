@@ -193,6 +193,9 @@ In a production environment, this project would obviously be much more modular, 
 - alerts
 - incident reporting
 - auto-healing
+- fault-tolerance
+
+Other concerns are Infrastructure (IaC), CI/CD, scalability, highly-available, and permissions handling.
 
 ## License
 
