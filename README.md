@@ -15,6 +15,7 @@ The following concepts are implemented: modular codebase, concurrency control, t
 3. [Functionality](#functionality)
 4. [File Structure](#file-structure)
 5. [Classes Overview](#classes-overview)
+6. [Unit testing](#unit-testing)
 6. [Features and Assumptions](#features-and-assumptions)
 7. [License](#license)
 
@@ -141,6 +142,15 @@ main.py: CLI
 - `ShardingManager`: Manages the shards in the system, distributing keys among shards, and retrieving the appropriate shard for a given key.
 - `DataStore`: Manages the in-memory key-value store, supports basic CRUD operations, and controls transactions.
 
+## Unit testing
+
+```
+cd tests
+py data_store/test_data_store.py
+py server/test_command_parser.py
+py server/test_server.py
+```
+
 ## Features and Assumptions 
 
 - ✅ Concurrency Control: 2PL for Multiple Clients
@@ -150,6 +160,7 @@ main.py: CLI
 - ✅ LRU Caching
 - ✅ Server-Client Architecture
 - ✅ Modular codebase
+- ✅ Unit testing
 - ✅ UTF-8 Encoding
 
 Assumptions made are:

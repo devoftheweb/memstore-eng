@@ -17,16 +17,40 @@ class TestServer(unittest.TestCase):
     def test_commands(self):
         """Tests sending various commands to the server."""
 
-        # Example of starting a transaction
+        # Test BEGIN command
         response = self.client.send_command("BEGIN")
-        transaction_id = response['transaction_id']  # Assuming the server returns a transaction ID
+        transaction_id1 = response['transaction_id']
+        self.assertIsNotNone(transaction_id1)
 
-        response = self.client.send_command(f"PUT key1 value1 {transaction_id}")
+        # Test PUT command
+        response = self.client.send_command(f"PUT key1 value1 {transaction_id1}")
         self.assertEqual(response['status'], 'Ok')
 
-        response = self.client.send_command(f"GET key1 {transaction_id}")
+        # Test GET command
+        response = self.client.send_command(f"GET key1 {transaction_id1}")
         self.assertEqual(response['status'], 'Ok')
         self.assertEqual(response['result'], 'value1')
+
+        # Test ROLLBACK command
+        response = self.client.send_command(f"ROLLBACK {transaction_id1}")
+        self.assertEqual(response['status'], 'Ok')
+
+        # Test DEL command
+        response = self.client.send_command(f"DEL key1 {transaction_id1}")
+        self.assertEqual(response['status'], 'Ok')
+
+        # Test COMMIT command
+        response = self.client.send_command(f"COMMIT {transaction_id1}")
+        self.assertEqual(response['status'], 'Ok')
+
+        # Test COMMITALL command
+        response = self.client.send_command("COMMITALL")
+        self.assertEqual(response['status'], 'Ok')
+
+        # Test SHOWALL command
+        response = self.client.send_command("SHOWALL")
+        self.assertEqual(response['status'], 'Ok')
+        self.assertIsNotNone(response['data'])  # Assuming the server returns the data
 
     def tearDown(self):
         self.client.disconnect()

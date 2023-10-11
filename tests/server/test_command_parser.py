@@ -4,67 +4,52 @@ from server.core.command_parser import CommandParser
 
 class TestCommandParser(unittest.TestCase):
 
+    def print_pass_message(self, cmd):
+        print(f"{cmd} command - Test passed")
+
     def test_valid_commands(self):
         """Tests parsing valid commands."""
         parser = CommandParser()
 
-        # Testing BEGIN command
-        action, params, transaction_id = parser.parse_command("BEGIN")
-        self.assertEqual(action, "BEGIN")
-        self.assertEqual(params, {})
-        self.assertIsNone(transaction_id)
+        test_cases = [
+            {"command": "BEGIN", "expected_action": "BEGIN", "expected_params": {}, "expected_transaction_id": None},
+            {"command": "PUT key1 value1", "expected_action": "PUT", "expected_params": {'key': 'key1', 'value': 'value1'}, "expected_transaction_id": None},
+            {"command": "GET key1", "expected_action": "GET", "expected_params": {'key': 'key1'}, "expected_transaction_id": None},
+            {"command": "DEL key1", "expected_action": "DEL", "expected_params": {'key': 'key1'}, "expected_transaction_id": None},
+            {"command": "COMMIT 1", "expected_action": "COMMIT", "expected_params": {}, "expected_transaction_id": 1},
+            {"command": "ROLLBACK 1", "expected_action": "ROLLBACK", "expected_params": {}, "expected_transaction_id": 1},
+            {"command": "SHOWALL", "expected_action": "SHOWALL", "expected_params": {}, "expected_transaction_id": None},
+            {"command": "COMMITALL", "expected_action": "COMMITALL", "expected_params": {}, "expected_transaction_id": None},
+        ]
 
-        # Testing START command
-        action, params, transaction_id = parser.parse_command("START")
-        self.assertEqual(action, "START")
-        self.assertEqual(params, {})
-        self.assertIsNone(transaction_id)
+        for test_case in test_cases:
+            cmd = test_case["command"]
+            expected_action = test_case["expected_action"]
+            expected_params = test_case["expected_params"]
+            expected_transaction_id = test_case["expected_transaction_id"]
 
-        # Testing PUT command
-        action, params, transaction_id = parser.parse_command("PUT key1 value1")
-        self.assertEqual(action, "PUT")
-        self.assertEqual(params, {'key': 'key1', 'value': 'value1'})
-        self.assertIsNone(transaction_id)
+            action, params, transaction_id = parser.parse_command(cmd)
 
-        # Testing GET command
-        action, params, transaction_id = parser.parse_command("GET key1")
-        self.assertEqual(action, "GET")
-        self.assertEqual(params, {'key': 'key1'})
-        self.assertIsNone(transaction_id)
-
-        # Testing DEL command
-        action, params, transaction_id = parser.parse_command("DEL key1")
-        self.assertEqual(action, "DEL")
-        self.assertEqual(params, {'key': 'key1'})
-        self.assertIsNone(transaction_id)
-
-        # Testing COMMIT command
-        action, params, transaction_id = parser.parse_command("COMMIT")
-        self.assertEqual(action, "COMMIT")
-        self.assertEqual(params, {})
-        self.assertIsNone(transaction_id)
-
-        # Testing ROLLBACK command
-        action, params, transaction_id = parser.parse_command("ROLLBACK")
-        self.assertEqual(action, "ROLLBACK")
-        self.assertEqual(params, {})
-        self.assertIsNone(transaction_id)
+            with self.subTest(cmd=cmd):
+                self.addCleanup(self.print_pass_message, expected_action)
+                self.assertEqual(action, expected_action)
+                self.assertEqual(params, expected_params)
+                self.assertEqual(transaction_id, expected_transaction_id)
 
     def test_invalid_commands(self):
         """Tests parsing invalid commands."""
         parser = CommandParser()
 
-        with self.assertRaises(ValueError):
-            parser.parse_command("")
+        invalid_test_cases = [
+            "",
+            "INVALID_COMMAND",
+            "PUT key1",
+            "GET",
+        ]
 
-        with self.assertRaises(ValueError):
-            parser.parse_command("INVALID_COMMAND")
-
-        with self.assertRaises(ValueError):
-            parser.parse_command("PUT key1")
-
-        with self.assertRaises(ValueError):
-            parser.parse_command("GET")
+        for cmd in invalid_test_cases:
+            with self.assertRaises(ValueError):
+                parser.parse_command(cmd)
 
 
 if __name__ == "__main__":
