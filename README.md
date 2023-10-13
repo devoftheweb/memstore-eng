@@ -109,7 +109,7 @@ server/:
         command_parser.py: Parse and validate client commands.
         
     caching/:
-        caching_strategy.py:
+        caching_strategy.py: LRU cache
         
     data_store/:
         concurrency/:
