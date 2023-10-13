@@ -20,6 +20,21 @@ class Transaction:
         self.deleted_keys: set = set()
         self.pre_commit_state: Dict[str, Any] = {}
 
+    def get(self, key: str, transaction_id: int) -> Optional[Any]:
+        """
+        Retrieves the value associated with a given key within the context of a specific transaction.
+
+        Args:
+            key (str): The key for which to retrieve the value.
+            transaction_id (int): The ID of the transaction within which the operation is performed.
+
+        Returns:
+            Optional[Any]: The value associated with the key. Returns None if the key does not exist.
+        """
+        shard = self.get_shard(key)
+        self.transaction_manager.acquire_lock(key, LockType.READ, transaction_id)  # Acquire a read lock
+        return shard.storage.get(key, None)
+
     def put(self, key: str, value: Any, current_value: Any) -> None:
         """
         Adds or updates a key-value pair in the transaction.

@@ -74,8 +74,45 @@ class Server:
         """
         try:
             action, params, transaction_id = self.command_parser.parse_command(command_str)
-            # The actual command processing logic here...
-            # (omitted for brevity)
+
+            # Handle the BEGIN command to start a transaction
+            if action == "BEGIN":
+                transaction_id = self.data_store.start_transaction()
+                return {'status': 'Ok', 'transaction_id': transaction_id}
+
+            # Validate transaction_id for commands that require it
+            if action in ["PUT", "GET", "DEL", "COMMIT", "ROLLBACK"]:
+                if transaction_id is None or transaction_id not in self.data_store.transaction_manager.transactions:
+                    return {'status': 'Error', 'mesg': f'Invalid transaction ID {transaction_id}'}
+
+            # Handle other commands using the transaction_id
+            if action == "PUT":
+                self.data_store.put(params['key'], params['value'], transaction_id)
+                return {'status': 'Ok'}
+            elif action == "GET":
+                result = self.data_store.get(params['key'], transaction_id)
+                return {'status': 'Ok', 'result': result}
+            elif action == "DEL":
+                self.data_store.delete(params['key'], transaction_id)
+                return {'status': 'Ok'}
+            elif action == "START":
+                self.data_store.start_transaction(transaction_id)
+                return {'status': 'Ok'}
+            elif action == "SHOWALL":
+                all_data = self.data_store.show_all()
+                return {'status': 'Ok', 'data': all_data}
+            elif action == "COMMIT":
+                self.data_store.commit_transaction(transaction_id)
+                return {'status': 'Ok'}
+            elif action == "COMMITALL":
+                self.data_store.commit_all_transactions()
+                return {'status': 'Ok'}
+            elif action == "ROLLBACK":
+                self.data_store.rollback_transaction(transaction_id)
+                return {'status': 'Ok'}
+            else:
+                return {'status': 'Error', 'mesg': 'Unknown command'}
+            
         except ValueError as e:
             return {'status': 'Error', 'mesg': str(e)}
 
